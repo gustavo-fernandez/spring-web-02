@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import com.example.demo.controller.model.ApiResponse;
 import com.example.demo.service.model.AccountDto;
 import com.example.demo.service.spi.AccountService;
 import java.util.List;
@@ -17,13 +18,15 @@ public class AccountController {
   private final AccountService accountService;
 
   @GetMapping("")
-  public List<AccountDto> findAll() {
-    return accountService.findAll();
+  public ApiResponse<List<AccountDto>> findAll() {
+    List<AccountDto> allAccounts = accountService.findAll();
+    return ApiResponse.<List<AccountDto>>builder().code("A01").message("Exito").data(allAccounts).build();
   }
 
   @GetMapping("{accountNumber}")
-  public AccountDto findByAccountNumber(@PathVariable String accountNumber) {
-    return accountService.findById(accountNumber);
+  public ApiResponse<AccountDto> findByAccountNumber(@PathVariable String accountNumber) {
+    AccountDto account = accountService.findById(accountNumber);
+    return ApiResponse.<AccountDto>builder().code("A01").message("Exito").data(account).build();
   }
 
 }
