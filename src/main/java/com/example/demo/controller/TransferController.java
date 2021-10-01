@@ -4,6 +4,7 @@ import com.example.demo.controller.model.ApiResponse;
 import com.example.demo.service.model.TransferDto;
 import com.example.demo.service.model.TransferResponseDto;
 import com.example.demo.service.spi.TransferService;
+import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +19,7 @@ public class TransferController {
   private final TransferService transferService;
 
   @PostMapping("/api/transfer")
-  public ApiResponse<TransferResponseDto> transfer(@RequestBody TransferDto transferDto) {
+  public ApiResponse<TransferResponseDto> transfer(@Valid @RequestBody TransferDto transferDto) {
     return ApiResponse.<TransferResponseDto>builder()
       .code("A01")
       .message("Exito")
