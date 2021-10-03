@@ -1,5 +1,6 @@
 package com.example.demo.controller.model;
 
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,5 +17,6 @@ public class ApiResponse<T> {
   String code;
   String message;
   T data;
+  List<FieldValidationError> fieldErrors;
 
 }

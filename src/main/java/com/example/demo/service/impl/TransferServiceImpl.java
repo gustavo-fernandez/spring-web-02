@@ -18,7 +18,7 @@ public class TransferServiceImpl implements TransferService {
   @Override
   public TransferResponseDto transfer(TransferDto transferDto) {
     // Validar que cuenta origen exista
-    AccountEntity originAccount = accountRepository.findByAccountNumber(transferDto.getOriginAccount());
+    AccountEntity originAccount = accountRepository.findByAccountNumber(transferDto.getOrigin());
     if (originAccount == null) {
       throw new TransferException("E01", "Cuenta origen no existe");
     }

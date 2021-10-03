@@ -14,12 +14,13 @@ public class TransferDto {
 
   @NotNull
   @Length(min = 6, max = 6)
-  @JsonProperty("origin")
-  private String originAccount;
+  private String origin;
+
   @NotNull
   @Length(min = 6, max = 6)
   @JsonProperty("destination")
   private String destinationAccount;
+
   @Min(1)
   @Max(1_000)
   private BigDecimal amount;
