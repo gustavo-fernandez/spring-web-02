@@ -8,6 +8,7 @@ import com.example.demo.service.model.TransferDto;
 import com.example.demo.service.model.TransferResponseDto;
 import com.example.demo.service.spi.TransferService;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
 
@@ -56,6 +57,7 @@ public class TransferServiceImpl implements TransferService {
     TransferResponseDto transferResponseDto = new TransferResponseDto();
     transferResponseDto.setSuccess(true);
     transferResponseDto.setOperationNumber(operationNumber);
+    transferResponseDto.setOperationTime(LocalDateTime.now());
     return transferResponseDto;
   }
 
