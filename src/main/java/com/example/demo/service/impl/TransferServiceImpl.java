@@ -1,5 +1,6 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.common.annotation.Timed;
 import com.example.demo.repository.model.AccountEntity;
 import com.example.demo.repository.spi.AccountRepository;
 import com.example.demo.service.exception.TransferException;
@@ -15,8 +16,10 @@ public class TransferServiceImpl implements TransferService {
 
   private final AccountRepository accountRepository;
 
+  @Timed
   @Override
   public TransferResponseDto transfer(TransferDto transferDto) {
+    // try { Thread.sleep(2_000); } catch (Exception e) {} // Simular delay
     // Validar que cuenta origen exista
     AccountEntity originAccount = accountRepository.findByAccountNumber(transferDto.getOrigin());
     if (originAccount == null) {

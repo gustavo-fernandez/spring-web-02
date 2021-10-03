@@ -1,5 +1,6 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.common.annotation.Timed;
 import com.example.demo.repository.spi.AccountRepository;
 import com.example.demo.service.mapper.AccountMapper;
 import com.example.demo.service.model.AccountDto;
@@ -14,6 +15,7 @@ public class AccountServiceImpl implements AccountService {
   private final AccountRepository accountRepository;
   private final AccountMapper accountMapper;
 
+  @Timed
   @Override
   public List<AccountDto> findAll() {
     return accountRepository.findAll()
