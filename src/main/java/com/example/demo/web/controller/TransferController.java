@@ -1,6 +1,7 @@
-package com.example.demo.controller;
+package com.example.demo.web.controller;
 
-import com.example.demo.controller.model.ApiResponse;
+import com.example.demo.common.annotation.JwtAction;
+import com.example.demo.web.controller.model.ApiResponse;
 import com.example.demo.service.model.TransferDto;
 import com.example.demo.service.model.TransferResponseDto;
 import com.example.demo.service.spi.TransferService;
@@ -18,6 +19,7 @@ public class TransferController {
 
   private final TransferService transferService;
 
+  @JwtAction("transferencias")
   @PostMapping("/api/transfer")
   public ApiResponse<TransferResponseDto> transfer(@Valid @RequestBody TransferDto transferDto) {
     return ApiResponse.<TransferResponseDto>builder()

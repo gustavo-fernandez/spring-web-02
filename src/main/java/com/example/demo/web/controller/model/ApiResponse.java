@@ -1,4 +1,4 @@
-package com.example.demo.controller.model;
+package com.example.demo.web.controller.model;
 
 import java.util.List;
 import lombok.AllArgsConstructor;

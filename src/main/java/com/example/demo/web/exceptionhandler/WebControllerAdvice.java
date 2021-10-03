@@ -1,14 +1,15 @@
-package com.example.demo.controller.exceptionhandler;
+package com.example.demo.web.exceptionhandler;
 
-import com.example.demo.controller.model.ApiResponse;
-import com.example.demo.controller.model.FieldValidationError;
+import com.example.demo.web.controller.model.ApiResponse;
+import com.example.demo.web.controller.model.FieldValidationError;
 import com.example.demo.service.exception.TransferException;
+import com.example.demo.web.exception.UnauthorizedException;
+import io.jsonwebtoken.ExpiredJwtException;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -41,6 +42,24 @@ public class WebControllerAdvice {
       .fieldErrors(fieldValidationErrors)
       .build();
     return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
+  }
+
+  @ExceptionHandler(UnauthorizedException.class)
+  public ResponseEntity<ApiResponse<?>> handleUnauthorizedException(UnauthorizedException unauthorizedException) {
+    ApiResponse<?> apiResponse = ApiResponse.builder()
+      .code("AU01")
+      .message("No está autorizado para consumir este servicio")
+      .build();
+    return new ResponseEntity<>(apiResponse, HttpStatus.FORBIDDEN);
+  }
+
+  @ExceptionHandler(ExpiredJwtException.class)
+  public ResponseEntity<ApiResponse<?>> handleExpiredJwtException(ExpiredJwtException expiredJwtException) {
+    ApiResponse<?> apiResponse = ApiResponse.builder()
+      .code("AU01")
+      .message("El JWT está expirado")
+      .build();
+    return new ResponseEntity<>(apiResponse, HttpStatus.FORBIDDEN);
   }
 
   @ExceptionHandler(Throwable.class)
