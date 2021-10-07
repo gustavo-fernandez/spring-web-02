@@ -13,26 +13,14 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class BeanConfiguration {
 
-  /*@Bean
-  AccountService accountService(
-    AccountRepository accountRepository,
-    AccountMapper accountMapper) {
-    return new AccountServiceImpl(accountRepository, accountMapper);
-  }*/
-
   @Bean
-  AccountService accountService() {
-    return new AccountServiceImpl(accountRepository(), accountMapper());
+  AccountService accountService(AccountMapper accountMapper) {
+    return new AccountServiceImpl(accountRepository(), accountMapper);
   }
 
   @Bean
   AccountRepository accountRepository() {
     return new InMemoryAccountRepository();
-  }
-
-  @Bean
-  AccountMapper accountMapper() {
-    return new AccountMapper();
   }
 
   @Bean

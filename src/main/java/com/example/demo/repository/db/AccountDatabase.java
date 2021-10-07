@@ -19,22 +19,20 @@ public final class AccountDatabase {
   private static final Map<String, AccountEntity> ACCOUNT_TABLE;
 
   static {
-    Map<String, AccountEntity> temporalTable = new HashMap<>();
+    ACCOUNT_TABLE = new HashMap<>();
     AccountEntity accountEntity1 = AccountEntity.builder()
       .accountNumber("123456")
       .owner("Alfonso Ugarte")
       .amount(new BigDecimal("200.0"))
       .build();
-    temporalTable.put(accountEntity1.getAccountNumber(), accountEntity1);
+    ACCOUNT_TABLE.put(accountEntity1.getAccountNumber(), accountEntity1);
 
     AccountEntity accountEntity2 = AccountEntity.builder()
       .accountNumber("ABCDEF")
       .owner("Cristian Galvez")
       .amount(new BigDecimal("100.0"))
       .build();
-    temporalTable.put(accountEntity2.getAccountNumber(), accountEntity2);
-
-    ACCOUNT_TABLE = Collections.unmodifiableMap(temporalTable);
+    ACCOUNT_TABLE.put(accountEntity2.getAccountNumber(), accountEntity2);
   }
 
   public static Map<String, AccountEntity> getAll() {
