@@ -24,4 +24,9 @@ public class InMemoryAccountRepository implements AccountRepository {
       .stream()
       .collect(Collectors.toList());
   }
+
+  @Override
+  public boolean create(AccountEntity accountEntity) {
+    return AccountDatabase.insert(accountEntity);
+  }
 }

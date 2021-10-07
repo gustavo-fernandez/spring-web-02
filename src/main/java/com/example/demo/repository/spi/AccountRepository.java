@@ -10,4 +10,6 @@ public interface AccountRepository {
   boolean updateAccount(AccountEntity accountEntity);
 
   List<AccountEntity> findAll();
+
+  boolean create(AccountEntity accountEntity);
 }

@@ -1,5 +1,6 @@
 package com.example.demo.web.exceptionhandler;
 
+import com.example.demo.repository.exception.DatabaseException;
 import com.example.demo.web.controller.model.ApiResponse;
 import com.example.demo.web.controller.model.FieldValidationError;
 import com.example.demo.service.exception.TransferException;
@@ -60,6 +61,16 @@ public class WebControllerAdvice {
       .message("El JWT está expirado")
       .build();
     return new ResponseEntity<>(apiResponse, HttpStatus.FORBIDDEN);
+  }
+
+  @ExceptionHandler(DatabaseException.class)
+  public ResponseEntity<ApiResponse<?>> handleUnhandledExceptions(DatabaseException databaseException) {
+    log.error("Ocurrio un error de base de datos", databaseException);
+    ApiResponse<?> apiResponse = ApiResponse.builder()
+      .code("DB01")
+      .message(databaseException.getMessage())
+      .build();
+    return new ResponseEntity<>(apiResponse, HttpStatus.OK);
   }
 
   @ExceptionHandler(Throwable.class)
