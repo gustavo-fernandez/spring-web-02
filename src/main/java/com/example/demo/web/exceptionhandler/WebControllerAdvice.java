@@ -1,11 +1,11 @@
 package com.example.demo.web.exceptionhandler;
 
 import com.example.demo.repository.exception.DatabaseException;
+import com.example.demo.service.exception.TokenExpiredException;
+import com.example.demo.service.exception.TransferException;
 import com.example.demo.web.controller.model.ApiResponse;
 import com.example.demo.web.controller.model.FieldValidationError;
-import com.example.demo.service.exception.TransferException;
 import com.example.demo.web.exception.UnauthorizedException;
-import io.jsonwebtoken.ExpiredJwtException;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
@@ -54,8 +54,8 @@ public class WebControllerAdvice {
     return new ResponseEntity<>(apiResponse, HttpStatus.FORBIDDEN);
   }
 
-  @ExceptionHandler(ExpiredJwtException.class)
-  public ResponseEntity<ApiResponse<?>> handleExpiredJwtException(ExpiredJwtException expiredJwtException) {
+  @ExceptionHandler(TokenExpiredException.class)
+  public ResponseEntity<ApiResponse<?>> handleExpiredJwtException(TokenExpiredException expiredJwtException) {
     ApiResponse<?> apiResponse = ApiResponse.builder()
       .code("AU01")
       .message("El JWT está expirado")

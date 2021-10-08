@@ -1,6 +1,6 @@
 package com.example.demo.config;
 
-import com.example.demo.web.interceptor.JwtValidationInterceptor;
+import com.example.demo.web.interceptor.AuthValidationInterceptor;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,11 +16,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 public class WebConfig implements WebMvcConfigurer {
 
   @Autowired
-  private JwtValidationInterceptor jwtValidationInterceptor;
+  private AuthValidationInterceptor authValidationInterceptor;
 
   @Override
   public void addInterceptors(InterceptorRegistry registry) {
-    registry.addInterceptor(jwtValidationInterceptor);
+    registry.addInterceptor(authValidationInterceptor);
   }
 
   @Bean

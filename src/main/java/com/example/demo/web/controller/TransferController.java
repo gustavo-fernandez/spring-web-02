@@ -1,10 +1,10 @@
 package com.example.demo.web.controller;
 
 import com.example.demo.common.annotation.JwtAction;
-import com.example.demo.web.controller.model.ApiResponse;
 import com.example.demo.service.model.TransferDto;
 import com.example.demo.service.model.TransferResponseDto;
 import com.example.demo.service.spi.TransferService;
+import com.example.demo.web.controller.model.ApiResponse;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

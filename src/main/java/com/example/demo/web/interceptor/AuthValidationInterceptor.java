@@ -1,7 +1,7 @@
 package com.example.demo.web.interceptor;
 
 import com.example.demo.common.annotation.JwtAction;
-import com.example.demo.service.spi.JwtService;
+import com.example.demo.service.spi.AuthService;
 import com.example.demo.web.exception.UnauthorizedException;
 import java.lang.reflect.Method;
 import javax.servlet.http.HttpServletRequest;
@@ -15,9 +15,9 @@ import org.springframework.web.servlet.HandlerInterceptor;
 @Component
 @Slf4j
 @RequiredArgsConstructor
-public class JwtValidationInterceptor implements HandlerInterceptor {
+public class AuthValidationInterceptor implements HandlerInterceptor {
 
-  private final JwtService jwtService;
+  private final AuthService authServerClient;
 
   @Override
   public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -34,7 +34,7 @@ public class JwtValidationInterceptor implements HandlerInterceptor {
       }
       String jwt = authorization.substring(7);
       log.info("Token: {} | Action: {}", jwt, jwtAction.value());
-      boolean isAuthorized = jwtService.validateToken(jwt, jwtAction.value());
+      boolean isAuthorized = authServerClient.validateToken(jwt, jwtAction.value());
       if (!isAuthorized) {
         throw new UnauthorizedException();
       }
