@@ -9,6 +9,8 @@ import com.example.demo.web.exception.UnauthorizedException;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -83,5 +85,22 @@ public class WebControllerAdvice {
     return new ResponseEntity<>(apiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
   }
 
+  @ExceptionHandler(EmptyResultDataAccessException.class)
+  public ResponseEntity<ApiResponse<?>> dataAccessException(EmptyResultDataAccessException throwable) {
+    ApiResponse<?> apiResponse = ApiResponse.builder()
+      .code("X01")
+      .message("no existen registros")
+      .build();
+    return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);
+  }
+
+  @ExceptionHandler(IncorrectResultSizeDataAccessException.class)
+  public ResponseEntity<ApiResponse<?>> incorrectResultSizeDataAccessException(IncorrectResultSizeDataAccessException throwable) {
+    ApiResponse<?> apiResponse = ApiResponse.builder()
+      .code("X01")
+      .message("Cantidad de registros incorrectos")
+      .build();
+    return new ResponseEntity<>(apiResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+  }
 
 }

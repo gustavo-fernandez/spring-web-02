@@ -6,7 +6,7 @@ import com.example.demo.repository.spi.AccountRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class InMemoryAccountRepository implements AccountRepository {
+public class JavaFakeInMemoryAccountRepository implements AccountRepository {
   
   @Override
   public AccountEntity findByAccountNumber(String accountNumber) {

@@ -1,1 +1,3 @@
-
+# java-fake, sql-in-memory
+repository:
+  implementation: sql-in-memory
