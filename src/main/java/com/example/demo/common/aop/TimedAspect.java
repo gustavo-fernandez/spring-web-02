@@ -19,8 +19,10 @@ public class TimedAspect {
     Object result = proceedingJoinPoint.proceed();
     LocalDateTime endTime = LocalDateTime.now();
     Duration duration = Duration.between(startTime, endTime);
-    log.info("Tiempo transcurrido en el método [{}] fue {} segundos",
-      proceedingJoinPoint.getSignature().getName(), duration.getSeconds());
+    log.info("Tiempo transcurrido en [{}.{}] fue {} segundos",
+      proceedingJoinPoint.getTarget().getClass().getSimpleName(),
+      proceedingJoinPoint.getSignature().getName(),
+      duration.getSeconds());
     return result;
   }
 

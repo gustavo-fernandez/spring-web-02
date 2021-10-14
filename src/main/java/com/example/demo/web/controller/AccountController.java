@@ -3,6 +3,7 @@ package com.example.demo.web.controller;
 import static com.example.demo.service.common.ResponseCode.A01;
 
 import com.example.demo.common.annotation.JwtAction;
+import com.example.demo.common.annotation.Timed;
 import com.example.demo.service.model.AccountDto;
 import com.example.demo.service.model.AccountRequestDto;
 import com.example.demo.service.spi.AccountService;
@@ -26,6 +27,7 @@ public class AccountController {
 
   @JwtAction("listar-cuentas")
   @GetMapping("")
+  @Timed
   public ApiResponse<List<AccountDto>> findAll() {
     List<AccountDto> allAccounts = accountService.findAll();
     return ApiResponse.<List<AccountDto>>builder().code(A01.name()).message("Exito").data(allAccounts).build();

@@ -7,9 +7,12 @@ import com.example.demo.service.mapper.AccountMapper;
 import com.example.demo.service.model.AccountDto;
 import com.example.demo.service.model.AccountRequestDto;
 import com.example.demo.service.spi.AccountService;
+import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
+import org.springframework.cache.annotation.Cacheable;
 
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
@@ -19,11 +22,18 @@ public class AccountServiceImpl implements AccountService {
 
   @Timed
   @Override
+  @Cacheable(cacheNames = "accounts", key = "#root.method")
   public List<AccountDto> findAll() {
+    wait(Duration.ofSeconds(4));
     return accountRepository.findAll()
       .stream()
       .map(accountMapper::toAccountDto)
       .collect(Collectors.toList());
+  }
+
+  @SneakyThrows
+  private static final void wait(Duration duration) {
+    Thread.sleep(duration.toMillis());
   }
 
   @Override
