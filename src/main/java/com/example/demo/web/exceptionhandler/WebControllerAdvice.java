@@ -5,6 +5,7 @@ import com.example.demo.service.exception.TokenExpiredException;
 import com.example.demo.service.exception.TransferException;
 import com.example.demo.web.controller.model.ApiResponse;
 import com.example.demo.web.controller.model.FieldValidationError;
+import com.example.demo.web.exception.UnauthenticatedException;
 import com.example.demo.web.exception.UnauthorizedException;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -54,6 +55,15 @@ public class WebControllerAdvice {
       .message("No está autorizado para consumir este servicio")
       .build();
     return new ResponseEntity<>(apiResponse, HttpStatus.FORBIDDEN);
+  }
+
+  @ExceptionHandler(UnauthenticatedException.class)
+  public ResponseEntity<ApiResponse<?>> handleUnauthenticatedException(UnauthenticatedException unauthenticatedException) {
+    ApiResponse<?> apiResponse = ApiResponse.builder()
+      .code("AU01")
+      .message("Primero debe autenticarse")
+      .build();
+    return new ResponseEntity<>(apiResponse, HttpStatus.UNAUTHORIZED);
   }
 
   @ExceptionHandler(TokenExpiredException.class)

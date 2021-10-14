@@ -2,6 +2,7 @@ package com.example.demo.web.interceptor;
 
 import com.example.demo.common.annotation.JwtAction;
 import com.example.demo.service.spi.AuthService;
+import com.example.demo.web.exception.UnauthenticatedException;
 import com.example.demo.web.exception.UnauthorizedException;
 import java.lang.reflect.Method;
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +31,7 @@ public class AuthValidationInterceptor implements HandlerInterceptor {
       }
       String authorization = request.getHeader("Authorization");
       if (authorization == null || !authorization.startsWith("Bearer ")) {
-        throw new UnauthorizedException();
+        throw new UnauthenticatedException();
       }
       String jwt = authorization.substring(7);
       log.info("Token: {} | Action: {}", jwt, jwtAction.value());
