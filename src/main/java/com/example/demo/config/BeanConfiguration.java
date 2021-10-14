@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 @Configuration
 public class BeanConfiguration {
@@ -29,8 +30,9 @@ public class BeanConfiguration {
 
   @Bean
   @ConditionalOnProperty(name = "repository.implementation", havingValue = "sql-in-memory")
-  AccountRepository sqlInMemoryAccountRepository(JdbcTemplate jdbcTemplate) {
-    return new SqlInMemoryAccountRepository(jdbcTemplate);
+  AccountRepository sqlInMemoryAccountRepository(JdbcTemplate jdbcTemplate,
+                                                 NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+    return new SqlInMemoryAccountRepository(jdbcTemplate, namedParameterJdbcTemplate);
   }
 
   @Bean

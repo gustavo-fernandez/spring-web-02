@@ -4,13 +4,16 @@ import com.example.demo.repository.impl.rowmapper.AccountEntityRowMapper;
 import com.example.demo.repository.model.AccountEntity;
 import com.example.demo.repository.spi.AccountRepository;
 import java.util.List;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 @RequiredArgsConstructor
 public class SqlInMemoryAccountRepository implements AccountRepository {
 
   private final JdbcTemplate jdbcTemplate;
+  private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
   @Override
   public AccountEntity findByAccountNumber(String accountNumber) {
@@ -23,7 +26,24 @@ public class SqlInMemoryAccountRepository implements AccountRepository {
 
   @Override
   public boolean updateAccount(AccountEntity accountEntity) {
-    return false;
+    var sql = "UPDATE account SET amount = :amount, owner = :owner WHERE account_number = :accountNumber";
+    int affectedRows = namedParameterJdbcTemplate.update(sql, Map.of(
+      "amount", accountEntity.getAmount(),
+      "owner", accountEntity.getOwner(),
+      "accountNumber", accountEntity.getAccountNumber()
+    ));
+    return affectedRows > 0;
+  }
+
+  @Override
+  public boolean updateAccountConError(AccountEntity accountEntity) {
+    var sql = "UPDATE account SET amount = :amount owner = :owner WHERE account_number = :accountNumber";
+    int affectedRows = namedParameterJdbcTemplate.update(sql, Map.of(
+      "amount", accountEntity.getAmount(),
+      "owner", accountEntity.getOwner(),
+      "accountNumber", accountEntity.getAccountNumber()
+    ));
+    return affectedRows > 0;
   }
 
   @Override
@@ -36,7 +56,9 @@ public class SqlInMemoryAccountRepository implements AccountRepository {
 
   @Override
   public boolean create(AccountEntity accountEntity) {
-    return false;
+    int affectedRows = jdbcTemplate.update("INSERT INTO account (owner, account_number, amount) VALUES (?, ?, ?)",
+      accountEntity.getOwner(), accountEntity.getAccountNumber(), accountEntity.getAmount());
+    return affectedRows == 1;
   }
 
 }

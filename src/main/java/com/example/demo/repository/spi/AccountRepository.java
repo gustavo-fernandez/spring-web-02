@@ -9,6 +9,8 @@ public interface AccountRepository {
 
   boolean updateAccount(AccountEntity accountEntity);
 
+  boolean updateAccountConError(AccountEntity accountEntity);
+
   List<AccountEntity> findAll();
 
   boolean create(AccountEntity accountEntity);

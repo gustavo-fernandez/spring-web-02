@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 @RequiredArgsConstructor
 public class TransferServiceImpl implements TransferService {
@@ -19,6 +20,7 @@ public class TransferServiceImpl implements TransferService {
 
   @Timed
   @Override
+  @Transactional
   public TransferResponseDto transfer(TransferDto transferDto) {
     // try { Thread.sleep(2_000); } catch (Exception e) {} // Simular delay
     // Validar que cuenta origen exista
@@ -50,7 +52,7 @@ public class TransferServiceImpl implements TransferService {
       .accountNumber(destinationAccount.getAccountNumber())
       .amount(destinationAccount.getAmount().add(transferDto.getAmount()))
       .build();
-    accountRepository.updateAccount(newDestinationAccount);
+    accountRepository.updateAccount/*ConError*/(newDestinationAccount);
 
     String operationNumber = UUID.randomUUID().toString();
 

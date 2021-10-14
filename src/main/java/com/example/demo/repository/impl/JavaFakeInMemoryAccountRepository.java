@@ -19,6 +19,11 @@ public class JavaFakeInMemoryAccountRepository implements AccountRepository {
   }
 
   @Override
+  public boolean updateAccountConError(AccountEntity accountEntity) {
+    return false; // no hace nada
+  }
+
+  @Override
   public List<AccountEntity> findAll() {
     return AccountDatabase.getAll().values()
       .stream()
